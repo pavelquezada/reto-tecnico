@@ -1,0 +1,70 @@
+service: reto-rimac
+
+custom:
+  settings:
+    STARWARSDB_TABLE: StarWarsDBTable
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment: ${self:custom.settings}
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/*"
+
+functions:
+  itemsFromStarWarsAPI:
+    handler: api/starwars.itemsFromStarWarsAPI
+    name: us1comdesalmbsw001
+    description: Obtener items desde la API de Star Wars y guardarlos en BD.
+    events:
+      - http:
+          path: /starwars
+          method: POST
+    tags:
+      NAME: us1comdesalmbsw001
+      ENTORNO: DESARROLLO
+      PROYECTO: RETO-RIMAC
+      DOMINIO: RIMAC
+      RESPONSABLE: PavelQuezada
+
+  getAllStarWarsItems:
+    handler: api/starwars.getAllStarWarsItems
+    name: us1comdesalmbsw002
+    description: Obtener items de la tabla Star Wars en DynamoDB.
+    events:
+      - http:
+          path: /starwars
+          method: GET
+    tags:
+      NAME: us1comdesalmbsw002
+      ENTORNO: DESARROLLO
+      PROYECTO: RETO-RIMAC
+      DOMINIO: RIMAC
+      RESPONSABLE: PavelQuezada
+
+resources:
+  Resources:
+    StarWarsDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.settings.STARWARSDB_TABLE}
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

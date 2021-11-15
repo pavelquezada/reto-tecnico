@@ -1,0 +1,48 @@
+{
+  "name": "reto-rimac",
+  "version": "1.0.0",
+  "description": "reto-rimac",
+  "dependencies": {
+    "aws4-axios": "^1.12.0",
+    "axios": "^0.19.2",
+    "node-datetime": "^2.1.2",
+    "node-rsa": "^1.1.1",
+    "serverless": "^1.83.2",
+    "serverless-externals-plugin": "^0.1.0",
+    "serverless-jest-plugin": "^0.2.1",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "serverless-stack-output": "^0.2.3",
+    "serverless-webpack": "^5.3.5",
+    "uuid": "^8.3.2",
+    "webpack": "^5.4.0",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.735.0",
+    "http-server": "^0.11.1",
+    "serverless-latest-layer-version": "^2.1.1",
+    "serverless-layers": "^2.3.0",
+    "serverless-plugin-common-excludes": "^3.0.0",
+    "serverless-plugin-include-dependencies": "^4.1.0",
+    "serverless-plugin-split-stacks": "^1.9.3",
+    "wait-on": "^3.3.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "deploy": "serverless deploy",
+    "start": "serverless offline"
+  },
+  "jest": {
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ]
+  },
+  "main": "api.starwars.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pavelquezada/reto-rimac.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
